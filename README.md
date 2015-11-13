@@ -6,6 +6,30 @@
 
 The `java-buildpack` is a [Cloud Foundry][] buildpack for running JVM-based applications.  It is designed to run many JVM-based applications ([Grails][], [Groovy][], Java Main, [Play Framework][], [Spring Boot][], and Servlet) with no additional configuration, but supports configuration of the standard components, and extension to add custom components.
 
+## QUICK UPDATE
+This is the standard java buildpack with the memory heuristics adjusted for large-heap applications.
+
+To update the memory settings please update: `config/oracle_jre.yml`
+
+```bash
+jre:
+  version: 1.8.0_+
+  repository_root: ""
+memory_calculator:
+  version: 1.+
+  repository_root: "{default.repository.root}/memory-calculator/{platform}/{architecture}"
+  memory_sizes:
+    heap: 2g..
+    metaspace: 64m..
+    permgen: 64m..
+  memory_heuristics:
+    heap: 90
+    metaspace: 5
+    permgen: 5
+    stack: 5
+    native: 5
+```
+
 ## Usage
 To use this buildpack specify the URI of the repository when pushing an application to Cloud Foundry:
 
